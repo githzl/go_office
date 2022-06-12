@@ -1,10 +1,13 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
-	"go_office/config"
-	"go_office/internal/cacheKey"
-	"net/http"
+	//"github.com/gin-gonic/gin"
+	//"go_office/config"
+	//"go_office/internal/cacheKey"
+	//"go_office/internal/middleware"
+	"go_office/internal/routers"
+	//"net/http"
+
 )
 
 func main(){
@@ -20,11 +23,14 @@ func main(){
 	//})
 	//fmt.Println(redisdb)
 
-	router := gin.Default()
-	router.GET("api/home/site-options", func(c *gin.Context) {
-		val, _ := config.Redisdb.Get("officeflow"+cacheKey.SiteOption()).Result()
-		c.String(http.StatusOK,"Go1 "+ val)
-	})
+	//router := gin.Default()
+	//apiRouter := router.Group("/api").Use(middleware.ApiMiddleware())
+	//apiRouter.GET("home/site-options",func(c *gin.Context) {
+	//	val, _ := config.Redisdb.Get("officeflow"+cacheKey.SiteOption()).Result()
+	//	c.String(http.StatusOK,"Go1 "+ val)
+	////router.GET("api/home/site-options",
+	//})
+	router := routers.Load()
 	// 默认端口是8080被tomcat使用了,用指定端口 r.Run(":8888")
 	_ = router.Run(":8888")
 }

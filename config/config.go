@@ -61,7 +61,6 @@ func init() {
 		panic(err.Error())
 	}
 	fmt.Println("配置文件main.yaml解析成功")
-	fmt.Println(YamlFile)
 
 	// 初始化 redis
 	Redisdb = redis.NewClient(&redis.Options{
@@ -78,7 +77,6 @@ func init() {
 	// 初始化postgreSQL
 	pgdsn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", YamlFile.Db["db"].Host, YamlFile.Db["db"].Port, YamlFile.Db["db"].User, YamlFile.Db["db"].Pass, YamlFile.Db["db"].Dbname)
 	Postgres, err := sql.Open("postgres", pgdsn)
-	fmt.Println(pgdsn)
 	if err != nil {
 		panic(err.Error())
 	}
