@@ -1,12 +1,11 @@
 package config
 
 import (
-	"database/sql"
 	"fmt"
 	"github.com/go-redis/redis"
+	_ "github.com/lib/pq"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
-	_ "github.com/lib/pq"
 )
 
 type YamlStruce struct {
@@ -46,8 +45,6 @@ var YamlFile *YamlStruce
 
 var Redisdb *redis.Client
 
-var Postgres *sql.DB
-
 func init() {
 	// 初始化main.yaml配置文件
 	configFile, err := ioutil.ReadFile("./src/main.yaml")
@@ -75,13 +72,11 @@ func init() {
 	fmt.Println("Redis连接成功")
 
 	// 初始化postgreSQL
-	pgdsn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", YamlFile.Db["db"].Host, YamlFile.Db["db"].Port, YamlFile.Db["db"].User, YamlFile.Db["db"].Pass, YamlFile.Db["db"].Dbname)
-	Postgres, err := sql.Open("postgres", pgdsn)
-	if err != nil {
-		panic(err.Error())
-	}
-	if err = Postgres.Ping(); err != nil {
-		panic(err.Error())
-	}
-	fmt.Println("主数据库Postgres连接成功")
+
+	//Postgres.Raw("select $1",1)
+	//if Postgres.Error != nil {
+	//	panic(Postgres.Error)
+	//}
+	//fmt.Println(Postgres)
+	//fmt.Println("主数据库Postgres连接成功")
 }
