@@ -11,13 +11,13 @@ import (
 )
 
 func HomeSiteOption(c *gin.Context) {
-	
+
 }
 func HomeGetTags(c *gin.Context) {
 	// 列表数据
 	var tagsList []pgmodel.Tags
-	pgmodel.DB.Model(&pgmodel.Tags{}).Where("type = $1", 3).Where("is_publish = $2", "yes").Select([]string{"name", "logo", "id"}).Order("sort ASC").Find(&tagsList)
-
+	pgmodel.DB.Model(&pgmodel.Tags{}).Where("type = $1", 0).Where("is_publish = $2", "yes").Select([]string{"name", "logo", "id"}).Order("sort ASC").Find(&tagsList)
+	
 	if len(tagsList) == 0 {
 		c.JSON(http.StatusOK, gin.H{
 			"e": 0,
