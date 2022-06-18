@@ -16,7 +16,7 @@ func HomeSiteOption(c *gin.Context) {
 func HomeGetTags(c *gin.Context) {
 	// 列表数据
 	var tagsList []pgmodel.Tags
-	pgmodel.DB.Model(&pgmodel.Tags{}).Where("type = ?", 10).Where("is_publish = ?", "yes").Select([]string{"name", "logo", "id"}).Order("sort ASC").Find(&tagsList)
+	pgmodel.DB.Model(&pgmodel.Tags{}).Where("type = ?", 0).Where("is_publish = ?", "yes").Select("name,id,logo").Order("sort ASC").Find(&tagsList)
 
 	res := gin.H{"e": 0, "m": "操作成功", "d": make([]int, 0)}
 	if len(tagsList) == 0 {
