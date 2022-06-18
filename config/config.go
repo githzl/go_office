@@ -70,13 +70,4 @@ func init() {
 		panic(err.Error())
 	}
 	fmt.Println("Redis连接成功")
-
-	// 初始化postgreSQL
-
-	//Postgres.Raw("select $1",1)
-	//if Postgres.Error != nil {
-	//	panic(Postgres.Error)
-	//}
-	//fmt.Println(Postgres)
-	//fmt.Println("主数据库Postgres连接成功")
 }
