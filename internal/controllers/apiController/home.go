@@ -33,6 +33,9 @@ func HomeGetTags(c *gin.Context) {
 		}
 		m = append(m, item)
 	}
+	if len(m) != 0 {
+		res["d"] = m
+	}
 	c.JSON(http.StatusOK, res)
 	return
 }

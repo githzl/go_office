@@ -9,32 +9,34 @@ import (
 )
 
 type YamlStruce struct {
-	Common struct{
-		Host string `yaml:"host"`
-		Schema string `yaml:"schema"`
-		Imghost string `yaml:"imghost"`
+	Common struct {
+		Host         string `yaml:"host"`
+		Schema       string `yaml:"schema"`
+		Imghost      string `yaml:"imghost"`
 		DocumentRoot string `yaml:"document_root"`
-		Vendor string `yaml:"vendor"`
-		Cache string `yaml:"cache"`
-		Data string `yaml:"data"`
-		Cdndomain string `yaml:"cdndomain"`
-		Envname string `yaml:"envname"`
-		Wkhtmltopdf string `yaml:"wkhtmltopdf"`
-		RsyncModule string `yaml:"rsync_module"`
-		DeployName string `yaml:"deploy_name"`
+		Vendor       string `yaml:"vendor"`
+		Cache        string `yaml:"cache"`
+		Data         string `yaml:"data"`
+		Cdndomain    string `yaml:"cdndomain"`
+		Envname      string `yaml:"envname"`
+		Wkhtmltopdf  string `yaml:"wkhtmltopdf"`
+		RsyncModule  string `yaml:"rsync_module"`
+		DeployName   string `yaml:"deploy_name"`
 	}
-	Redis struct{
+	Redis struct {
 		Servers []string `yaml:"servers"`
-		Prefix string `yaml:"prefix"`
+		Auth    string   `yaml:"auth"`
+		Db      int      `yaml:"db"`
+		Prefix  string   `yaml:"prefix"`
 	}
-	Db map[string]struct{
+	Db map[string]struct {
 		Adapter string `yaml:"Adapter"`
-		User string `yaml:"user"`
-		Pass string `yaml:"pass"`
-		Dbname string `yaml:"dbname"`
-		Port int `yaml:"port"`
-		Host string `yaml:"host"`
-		Slaves []struct{
+		User    string `yaml:"user"`
+		Pass    string `yaml:"pass"`
+		Dbname  string `yaml:"dbname"`
+		Port    int    `yaml:"port"`
+		Host    string `yaml:"host"`
+		Slaves  []struct {
 			Host string `yaml:"host"`
 			Port string `yaml:"port"`
 		}
@@ -53,7 +55,7 @@ func init() {
 		panic(err.Error())
 	}
 	YamlFile = &YamlStruce{}
-	err = yaml.Unmarshal(configFile,YamlFile)
+	err = yaml.Unmarshal(configFile, YamlFile)
 	if err != nil {
 		panic(err.Error())
 	}
@@ -62,8 +64,8 @@ func init() {
 	// 初始化 redis
 	Redisdb = redis.NewClient(&redis.Options{
 		Addr:     YamlFile.Redis.Servers[0], // use default Addr
-		Password: "",               // no password set
-		DB:       0,                // use default DB
+		Password: "",                        // no password set
+		DB:       0,                         // use default DB
 	})
 	_, err = Redisdb.Ping().Result()
 	if err != nil {
