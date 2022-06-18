@@ -12,7 +12,6 @@ func Load() *gin.Engine{
 	{
 		apiGroup.GET("/test/test", apiController.TestTest) // 测试
 		apiGroup.GET("/home/get-tags", apiController.HomeGetTags)
-		apiGroup.GET("/home/get-tagss", apiController.HomeGetTags)
 	}
 	return r
 }
