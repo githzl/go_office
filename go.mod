@@ -9,5 +9,6 @@ require (
 	github.com/jinzhu/gorm v1.9.16
 	github.com/lib/pq v1.10.6
 	github.com/wulijun/go-php-serialize v0.0.0-20131104125240-bfe692b0100e // indirect
-	gopkg.in/yaml.v2 v2.2.8
+	go.etcd.io/etcd/client/v3 v3.5.4 // indirect
+	gopkg.in/yaml.v2 v2.4.0
 )
