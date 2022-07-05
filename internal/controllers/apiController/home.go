@@ -3,21 +3,17 @@ package apiController
 import (
 	"github.com/gin-gonic/gin"
 	"go_office/config"
-	"go_office/internal/controllers"
 	"go_office/internal/pgmodel"
 	"go_office/internal/services/dto"
 	"net/http"
 )
-
-var Response = new(controllers.ResponseFormat)
-
 
 func HomeGetTags(c *gin.Context) {
 	// 列表数据
 	var tagsList []pgmodel.Tags
 	pgmodel.DB.Model(&pgmodel.Tags{}).Where("type = ?", 0).Where("is_publish = ?", "yes").Select("name,id,logo").Order("sort ASC").Find(&tagsList)
 	if len(tagsList) == 0 {
-		c.JSON(http.StatusOK, Response.Succ(make([]int,0)))
+		c.JSON(http.StatusOK, Response.Succ(make([]int, 0)))
 		return
 	}
 
@@ -27,11 +23,11 @@ func HomeGetTags(c *gin.Context) {
 	for idx, tags := range tagsList {
 		tagsDtoList[idx] = dto.Tags{
 			Tags: pgmodel.Tags{
-				Id: tags.Id,
+				Id:   tags.Id,
 				Name: tags.Name,
 				Logo: tags.Logo,
 			},
-			LogoUrl: imgHost+tags.Logo}
+			LogoUrl: imgHost + tags.Logo}
 	}
 	c.JSON(http.StatusOK, Response.Succ(tagsDtoList))
 	return
