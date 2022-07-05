@@ -1,5 +1,7 @@
 package controllers
 
+var Response = new(ResponseFormat)
+
 type ResponseFormat struct {
 	E int         `json:"e"` // error
 	M string      `json:"m"` // message
@@ -31,6 +33,7 @@ func (r *ResponseFormat) Fail(message string) *ResponseFormat {
 	}
 	r.E = FAIL
 	r.M = message
+	r.D = ""
 	return r
 }
 

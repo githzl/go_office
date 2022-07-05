@@ -16,7 +16,8 @@ func Load() *gin.Engine {
 	}
 	openGroup := r.Group("/open").Use(middleware.OpenMiddleware())
 	{
-		openGroup.GET("/token/get", openController.TokenGet) // 获取access_token
+		openGroup.GET("/token/get", openController.TokenGet)      // 获取access_token
+		openGroup.GET("/apps/my-apps", openController.AppsMyApps) // 获取我的收藏
 	}
 	return r
 }

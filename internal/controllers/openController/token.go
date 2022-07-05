@@ -15,7 +15,7 @@ func TokenGet(c *gin.Context) {
 	}
 	var thirdparty pgmodel.Thirdparty
 	//pgmodel.DB.Model(&pgmodel.Thirdparty{}).Where("appid = ?", appid).Where("appsecret = ?", appsecret).Order("id ASC").Find(&thirdparty)
-	pgmodel.DB.Model(&pgmodel.Thirdparty{}).Order("id DESC").Find(&thirdparty)
+	pgmodel.DB.Model(&pgmodel.Thirdparty{}).Order("id DESC").First(&thirdparty)
 	c.JSON(http.StatusOK, Response.Succ(thirdparty))
 	return
 }
