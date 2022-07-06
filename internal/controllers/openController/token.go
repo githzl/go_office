@@ -45,9 +45,8 @@ func TokenGet(c *gin.Context) {
 	generateTokenErrorCount := 0
 	// generateToken:
 generateToken:
-	randInt := time.Now().UnixNano() + rand.Int63n(10)
-	str := strconv.FormatInt(randInt, 10)
-	accessToken := fmt.Sprintf("%x", md5.Sum([]byte(str))) + fmt.Sprintf("%x", sha1.Sum([]byte(str)))
+	str := strconv.FormatInt(time.Now().UnixNano()+rand.Int63n(10), 10)
+	accessToken := fmt.Sprintf("%x", md5.Sum([]byte(str))) + fmt.Sprintf("%x", sha1.Sum([]byte(thirdparty.Appid)))
 
 	exists, err := redis.Client.Exists(accessToken).Result()
 	if err != nil {

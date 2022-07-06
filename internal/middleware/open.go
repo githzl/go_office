@@ -4,6 +4,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/pkg/errors"
 	"go_office/internal/controllers"
+	"go_office/internal/pgmodel"
+	"go_office/internal/redis"
 	"net/http"
 )
 
@@ -26,8 +28,15 @@ func verifyAccessToken(accessToken string) error {
 	if accessToken == "" {
 		return errors.New("缺少参数access_token")
 	}
-	if accessToken != "abc" {
+
+	thirdpartyId, err := redis.Client.Get(accessToken).Result()
+	if err != nil {
 		return errors.New("access_token验证失败")
+	}
+	var thirdparty pgmodel.Thirdparty
+	pgmodel.DB.Model(&pgmodel.Thirdparty{}).Where("id = ?", thirdpartyId).First(&thirdparty)
+	if thirdparty.Id == 0 || thirdparty.Enable != "yes" {
+		return errors.New("该appid不存在或者被禁用")
 	}
 	return nil
 }
