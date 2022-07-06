@@ -13,6 +13,11 @@ import (
 	"time"
 )
 
+type responseAccessToken struct {
+	AccessToken string `json:"access_token"`
+	ExpiresIn   int    `json:"expires_in"`
+}
+
 const expire = 7200
 
 func TokenGet(c *gin.Context) {
@@ -61,9 +66,10 @@ generateToken:
 		c.JSON(http.StatusOK, Response.Fail(err.Error()))
 		return
 	}
-	m := make(map[string]interface{}, 2)
-	m["access_token"] = accessToken
-	m["expires_in"] = expire
-	c.JSON(http.StatusOK, Response.Succ(m))
+	res := responseAccessToken{
+		AccessToken: accessToken,
+		ExpiresIn:   expire,
+	}
+	c.JSON(http.StatusOK, Response.Succ(res))
 	return
 }
