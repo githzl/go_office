@@ -15,7 +15,7 @@ func OpenMiddleware() gin.HandlerFunc {
 			//如果请求path不是"／open/token/get"则需要验证本次携带的access_token是否有效
 			accessToken := c.Query("access_token")
 			if err := verifyAccessToken(accessToken); err != nil {
-				c.JSON(http.StatusOK, controllers.Response.Fail(err.Error()))
+				c.JSON(http.StatusOK, controllers.Fail(err.Error()))
 				c.Abort()
 			}
 		}

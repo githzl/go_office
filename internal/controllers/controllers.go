@@ -1,7 +1,5 @@
 package controllers
 
-var Response = new(ResponseFormat)
-
 type ResponseFormat struct {
 	E int         `json:"e"` // error
 	M string      `json:"m"` // message
@@ -20,25 +18,37 @@ const (
 	ERR_ACCESS_TOKEN = 10010
 )
 
-func (r *ResponseFormat) Succ(data interface{}) *ResponseFormat {
-	r.E = SUCC
-	r.M = codeMessage[SUCC]
-	r.D = data
+func Succ(data interface{}) (r ResponseFormat) {
+	r = ResponseFormat{
+		E: SUCC,
+		M: codeMessage[SUCC],
+		D: data,
+	}
 	return r
+	//r := new ResponseFormat
+	//r.E = SUCC
+	//r.M = codeMessage[SUCC]
+	//r.D = data
+	//return r
 }
 
-func (r *ResponseFormat) Fail(message string) *ResponseFormat {
+func Fail(message string) (r ResponseFormat) {
+	r = ResponseFormat{
+		E: FAIL,
+		M: message,
+		D: "",
+	}
 	if message == "" {
 		r.M = codeMessage[FAIL]
 	}
-	r.E = FAIL
-	r.M = message
-	r.D = ""
 	return r
 }
 
-func (r *ResponseFormat) FailByCode(code int) *ResponseFormat {
-	r.E = code
-	r.M = codeMessage[code]
+func FailByCode(code int) (r ResponseFormat) {
+	r = ResponseFormat{
+		E: code,
+		M: codeMessage[code],
+		D: "",
+	}
 	return r
 }
